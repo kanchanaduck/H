@@ -16,6 +16,8 @@ namespace AngularFirst.Models
         public string url { get; set; }
         public string spare1 { get; set; }
         public string spare2 { get; set; }
+        public string spare3 { get; set; }
+        public string spare4 { get; set; }
         [Required]
         [DataType(DataType.Date)]
         public DateTime update_date { get; set; }

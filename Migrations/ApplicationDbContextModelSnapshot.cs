@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace AngularFirst.Data.Migrations
+namespace AngularFirst.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
     partial class ApplicationDbContextModelSnapshot : ModelSnapshot
@@ -105,6 +105,12 @@ namespace AngularFirst.Data.Migrations
                     b.Property<string>("spare2")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("spare3")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("spare4")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("update_by")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -122,7 +128,7 @@ namespace AngularFirst.Data.Migrations
                     b.ToTable("Menu");
                 });
 
-            modelBuilder.Entity("AngularFirst.Models.MenuSee", b =>
+            modelBuilder.Entity("AngularFirst.Models.UserSeeMenu", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -160,7 +166,7 @@ namespace AngularFirst.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("MenuSee");
+                    b.ToTable("UserSeeMenu");
                 });
 
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.DeviceFlowCodes", b =>

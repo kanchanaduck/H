@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AngularFirst.Models
 {
-    public class MenuSee
+    public class UserSeeMenu
     {
         [Key]
         public int Id { get; set; }

@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace AngularFirst.Data.Migrations
+namespace AngularFirst.Migrations
 {
     public partial class InitialCreate : Migration
     {
@@ -66,6 +66,33 @@ namespace AngularFirst.Data.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Menu",
+                columns: table => new
+                {
+                    menu_code = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    menu_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    parent_menu_code = table.Column<string>(type: "nvarchar(450)", nullable: true),
+                    description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    url = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    spare1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    spare2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    spare3 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    spare4 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    update_date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    update_by = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Menu", x => x.menu_code);
+                    table.ForeignKey(
+                        name: "FK_Menu_Menu_parent_menu_code",
+                        column: x => x.parent_menu_code,
+                        principalTable: "Menu",
+                        principalColumn: "menu_code",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "PersistedGrants",
                 columns: table => new
                 {
@@ -83,6 +110,27 @@ namespace AngularFirst.Data.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_PersistedGrants", x => x.Key);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserSeeMenu",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    user_name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    menu_name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    active = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    spare1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    spare2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    spare3 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    spare4 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    update_date = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    update_by = table.Column<string>(type: "nvarchar(max)", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserSeeMenu", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -242,6 +290,11 @@ namespace AngularFirst.Data.Migrations
                 column: "Expiration");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Menu_parent_menu_code",
+                table: "Menu",
+                column: "parent_menu_code");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_PersistedGrants_Expiration",
                 table: "PersistedGrants",
                 column: "Expiration");
@@ -278,7 +331,13 @@ namespace AngularFirst.Data.Migrations
                 name: "DeviceCodes");
 
             migrationBuilder.DropTable(
+                name: "Menu");
+
+            migrationBuilder.DropTable(
                 name: "PersistedGrants");
+
+            migrationBuilder.DropTable(
+                name: "UserSeeMenu");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

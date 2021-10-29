@@ -17,7 +17,8 @@ using Microsoft.Extensions.Logging;
 
 namespace AngularFirst.Areas.Identity.Pages.Account
 {
-    [AllowAnonymous]
+    // [AllowAnonymous]
+    [IgnoreAntiforgeryToken]
     public class RegisterModel : PageModel
     {
         private readonly SignInManager<ApplicationUser> _signInManager;
@@ -47,6 +48,8 @@ namespace AngularFirst.Areas.Identity.Pages.Account
         public class InputModel
         {
             [Required]
+            [Display(Name = "Username")]
+            public string UserName { get; set; }
             [EmailAddress]
             [Display(Name = "Email")]
             public string Email { get; set; }
@@ -75,7 +78,11 @@ namespace AngularFirst.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = Input.Email, Email = Input.Email };
+                var user = new ApplicationUser { 
+                    UserName = Input.UserName, 
+                    Email = Input.Email,
+                    EmailConfirmed = true
+                };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {
@@ -94,7 +101,8 @@ namespace AngularFirst.Areas.Identity.Pages.Account
 
                     if (_userManager.Options.SignIn.RequireConfirmedAccount)
                     {
-                        return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                        // return RedirectToPage("RegisterConfirmation", new { email = Input.Email, returnUrl = returnUrl });
+                        return RedirectToPage("login");
                     }
                     else
                     {

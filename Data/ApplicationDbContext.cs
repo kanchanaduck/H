@@ -18,7 +18,7 @@ namespace AngularFirst.Data
         {
         }
         public DbSet<Menu> Menu { get; set; }
-        public DbSet<MenuSee> MenuSee { get; set; }
+        public DbSet<UserSeeMenu> UserSeeMenu { get; set; }
 
         // protected override void OnModelCreating(ModelBuilder modelBuilder)
         // {

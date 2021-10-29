@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
-namespace AngularFirst.Data.Migrations
+namespace AngularFirst.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210915022156_MenuHierarchy")]
-    partial class MenuHierarchy
+    [Migration("20211022071544_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -107,6 +107,12 @@ namespace AngularFirst.Data.Migrations
                     b.Property<string>("spare2")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("spare3")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("spare4")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("update_by")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -122,6 +128,47 @@ namespace AngularFirst.Data.Migrations
                     b.HasIndex("parent_menu_code");
 
                     b.ToTable("Menu");
+                });
+
+            modelBuilder.Entity("AngularFirst.Models.UserSeeMenu", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("active")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("menu_name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("spare1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("spare2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("spare3")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("spare4")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("update_by")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("update_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("user_name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserSeeMenu");
                 });
 
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.DeviceFlowCodes", b =>
