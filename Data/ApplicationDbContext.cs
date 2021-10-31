@@ -17,6 +17,7 @@ namespace AngularFirst.Data
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
         }
+        public DbSet<Employee> Employee { get; set; }
         public DbSet<Menu> Menu { get; set; }
         public DbSet<UserSeeMenu> UserSeeMenu { get; set; }
 

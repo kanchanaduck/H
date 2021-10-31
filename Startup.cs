@@ -27,6 +27,7 @@ namespace AngularFirst
 {
     public class Startup
     {
+        readonly string MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
         public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
             Environment = env;
@@ -99,6 +100,18 @@ namespace AngularFirst
             {
                 configuration.RootPath = "ClientApp/dist";
             });
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: MyAllowSpecificOrigins,
+                builder =>
+                {
+                    builder.WithOrigins("http://localhost:4200/",
+                                        "https://localhost:5001/")
+                                        .AllowAnyHeader()
+                                        .AllowAnyMethod();
+                });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -145,6 +158,8 @@ namespace AngularFirst
                     pattern: "{controller}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
+
+            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseSpa(spa =>
             {
