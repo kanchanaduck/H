@@ -7,9 +7,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AngularFirst.Data;
 using AngularFirst.Models;
+using Microsoft.AspNetCore.Cors;
 
 namespace AngularFirst.Controllers
 {
+    [EnableCors("_myAllowSpecificOrigins")]
     [Route("api/[controller]")]
     [ApiController]
     public class MenusController : ControllerBase

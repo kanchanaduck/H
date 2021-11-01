@@ -78,39 +78,43 @@ namespace AngularFirst
             services.AddControllersWithViews()
                 .AddJsonOptions(opts => opts.JsonSerializerOptions.PropertyNamingPolicy = null);
 
-            services.AddMvc(option => option.EnableEndpointRouting = false)
-                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0)
-                .AddNewtonsoftJson(opt => opt.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore);
+            services.AddMvc(setupAction=> {
+                setupAction.EnableEndpointRouting = false;
+                }).AddJsonOptions(jsonOptions =>
+                {
+                    jsonOptions.JsonSerializerOptions.PropertyNamingPolicy = null;
+                })
+                .SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
 
             services.AddRazorPages();
 
             services.Configure<IdentityOptions>(options =>
             {
-                // Default Password settings.
+                // Password settings.
                 options.Password.RequireDigit = false;
                 options.Password.RequireLowercase = false;
                 options.Password.RequireNonAlphanumeric = false;
                 options.Password.RequireUppercase = false;
                 options.Password.RequiredLength = 6;
                 options.Password.RequiredUniqueChars = 1;
-            });
 
-            // In production, the Angular files will be served from this directory
-            services.AddSpaStaticFiles(configuration =>
-            {
-                configuration.RootPath = "ClientApp/dist";
+                // User settings.
+                options.User.RequireUniqueEmail = false;
             });
-
             services.AddCors(options =>
             {
                 options.AddPolicy(name: MyAllowSpecificOrigins,
                 builder =>
                 {
-                    builder.WithOrigins("http://localhost:4200/",
-                                        "https://localhost:5001/")
+                    builder.AllowAnyOrigin()
                                         .AllowAnyHeader()
                                         .AllowAnyMethod();
                 });
+            });
+            // In production, the Angular files will be served from this directory
+            services.AddSpaStaticFiles(configuration =>
+            {
+                configuration.RootPath = "ClientApp/dist";
             });
         }
 
@@ -128,13 +132,14 @@ namespace AngularFirst
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-            // app.UseApiResponseAndExceptionWrapper();
+
+            app.UseCors(MyAllowSpecificOrigins);
+
             app.UseApiResponseAndExceptionWrapper<MapResponseObject>(
                 new AutoWrapperOptions { 
                     IsApiOnly = false,
                     WrapWhenApiPathStartsWith = "/api",
-                    ShowStatusCode = true//,
-                    // IgnoreWrapForOkRequests = true
+                    ShowStatusCode = true
                 } 
             ); 
 
@@ -158,8 +163,6 @@ namespace AngularFirst
                     pattern: "{controller}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
-
-            app.UseCors(MyAllowSpecificOrigins);
 
             app.UseSpa(spa =>
             {
