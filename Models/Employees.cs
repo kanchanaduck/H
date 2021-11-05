@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace AngularFirst.Models
 {
     // [Keyless]
-    public class Employee
+    public class Employees
     {
         public string BAND { get; set; }
         public string DEPT_ABB_NAME { get; set; }
@@ -24,6 +24,18 @@ namespace AngularFirst.Models
         public string FNAME_THA { get; set; }
         public string GNAME_ENG { get; set; }
         public string GNAME_THA { get; set; }
+        public string FULLNAME_THA{
+            get
+            {
+                return GNAME_THA + " " + FNAME_THA;
+            }
+        }
+        public string FULLNAME_ENG{
+            get
+            {
+                return GNAME_ENG + " " + FNAME_ENG;
+            }
+        }
         public string OLD_EMP_NO { get; set; }
         public string POSN_CODE { get; set; }
         public string POSN_ENAME { get; set; }

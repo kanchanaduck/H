@@ -7,54 +7,52 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using AngularFirst.Data;
 using AngularFirst.Models;
-using Microsoft.AspNetCore.Cors;
 
 namespace AngularFirst.Controllers
 {
-    [EnableCors("_myAllowSpecificOrigins")]
     [Route("api/[controller]")]
     [ApiController]
-    public class EmployeeController : ControllerBase
+    public class EmployeesController : ControllerBase
     {
         private readonly ApplicationDbContext _context;
 
-        public EmployeeController(ApplicationDbContext context)
+        public EmployeesController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: api/Employee
+        // GET: api/Employees
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Employee>>> GetEmployee()
+        public async Task<ActionResult<IEnumerable<Employees>>> GetEmployee()
         {
             return await _context.Employee.ToListAsync();
         }
 
-        // GET: api/Employee/5
+        // GET: api/Employees/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Employee>> GetEmployee(string id)
+        public async Task<ActionResult<Employees>> GetEmployees(string id)
         {
-            var employee = await _context.Employee.FindAsync(id);
+            var employees = await _context.Employee.FindAsync(id);
 
-            if (employee == null)
+            if (employees == null)
             {
                 return NotFound();
             }
 
-            return employee;
+            return employees;
         }
 
-        // PUT: api/Employee/5
+        // PUT: api/Employees/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEmployee(string id, Employee employee)
+        public async Task<IActionResult> PutEmployees(string id, Employees employees)
         {
-            if (id != employee.EMP_NO)
+            if (id != employees.EMP_NO)
             {
                 return BadRequest();
             }
 
-            _context.Entry(employee).State = EntityState.Modified;
+            _context.Entry(employees).State = EntityState.Modified;
 
             try
             {
@@ -62,7 +60,7 @@ namespace AngularFirst.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!EmployeeExists(id))
+                if (!EmployeesExists(id))
                 {
                     return NotFound();
                 }
@@ -75,19 +73,19 @@ namespace AngularFirst.Controllers
             return NoContent();
         }
 
-        // POST: api/Employee
+        // POST: api/Employees
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Employee>> PostEmployee(Employee employee)
+        public async Task<ActionResult<Employees>> PostEmployees(Employees employees)
         {
-            _context.Employee.Add(employee);
+            _context.Employee.Add(employees);
             try
             {
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateException)
             {
-                if (EmployeeExists(employee.EMP_NO))
+                if (EmployeesExists(employees.EMP_NO))
                 {
                     return Conflict();
                 }
@@ -97,26 +95,26 @@ namespace AngularFirst.Controllers
                 }
             }
 
-            return CreatedAtAction("GetEmployee", new { id = employee.EMP_NO }, employee);
+            return CreatedAtAction("GetEmployees", new { id = employees.EMP_NO }, employees);
         }
 
-        // DELETE: api/Employee/5
+        // DELETE: api/Employees/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteEmployee(string id)
+        public async Task<IActionResult> DeleteEmployees(string id)
         {
-            var employee = await _context.Employee.FindAsync(id);
-            if (employee == null)
+            var employees = await _context.Employee.FindAsync(id);
+            if (employees == null)
             {
                 return NotFound();
             }
 
-            _context.Employee.Remove(employee);
+            _context.Employee.Remove(employees);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool EmployeeExists(string id)
+        private bool EmployeesExists(string id)
         {
             return _context.Employee.Any(e => e.EMP_NO == id);
         }

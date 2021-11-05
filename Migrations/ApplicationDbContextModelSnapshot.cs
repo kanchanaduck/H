@@ -84,7 +84,47 @@ namespace AngularFirst.Migrations
                     b.ToTable("AspNetUsers");
                 });
 
-            modelBuilder.Entity("AngularFirst.Models.Employee", b =>
+            modelBuilder.Entity("AngularFirst.Models.EmployeeRoleClaims", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("active")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("role_id")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("spare1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("spare2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("spare3")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("spare4")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("update_by")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("update_date")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("user_name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EmployeeRoleClaim");
+                });
+
+            modelBuilder.Entity("AngularFirst.Models.Employees", b =>
                 {
                     b.Property<string>("EMP_NO")
                         .HasColumnType("nvarchar(450)");
@@ -163,7 +203,7 @@ namespace AngularFirst.Migrations
                     b.ToTable("Employee");
                 });
 
-            modelBuilder.Entity("AngularFirst.Models.Menu", b =>
+            modelBuilder.Entity("AngularFirst.Models.Menus", b =>
                 {
                     b.Property<string>("menu_code")
                         .HasColumnType("nvarchar(450)");
@@ -207,7 +247,7 @@ namespace AngularFirst.Migrations
                     b.ToTable("Menu");
                 });
 
-            modelBuilder.Entity("AngularFirst.Models.UserSeeMenu", b =>
+            modelBuilder.Entity("AngularFirst.Models.RoleMenuClaims", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -217,7 +257,48 @@ namespace AngularFirst.Migrations
                     b.Property<string>("active")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("menu_name")
+                    b.Property<string>("menu_code")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("role_id")
+                        .HasColumnType("int");
+
+                    b.Property<string>("spare1")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("spare2")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("spare3")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("spare4")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("update_by")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("update_date")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("RoleMenuClaims");
+                });
+
+            modelBuilder.Entity("AngularFirst.Models.Roles", b =>
+                {
+                    b.Property<int>("role_id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("active")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("role_name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("spare1")
@@ -239,13 +320,9 @@ namespace AngularFirst.Migrations
                     b.Property<DateTime>("update_date")
                         .HasColumnType("datetime2");
 
-                    b.Property<string>("user_name")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                    b.HasKey("role_id");
 
-                    b.HasKey("Id");
-
-                    b.ToTable("UserSeeMenu");
+                    b.ToTable("Role");
                 });
 
             modelBuilder.Entity("IdentityServer4.EntityFramework.Entities.DeviceFlowCodes", b =>
@@ -486,9 +563,9 @@ namespace AngularFirst.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("AngularFirst.Models.Menu", b =>
+            modelBuilder.Entity("AngularFirst.Models.Menus", b =>
                 {
-                    b.HasOne("AngularFirst.Models.Menu", "parent")
+                    b.HasOne("AngularFirst.Models.Menus", "parent")
                         .WithMany("children")
                         .HasForeignKey("parent_menu_code");
 
@@ -546,7 +623,7 @@ namespace AngularFirst.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("AngularFirst.Models.Menu", b =>
+            modelBuilder.Entity("AngularFirst.Models.Menus", b =>
                 {
                     b.Navigation("children");
                 });

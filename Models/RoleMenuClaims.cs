@@ -5,13 +5,14 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace AngularFirst.Models
 {
-    public class UserSeeMenu
+    public class RoleMenuClaims
     {
         [Key]
         public int Id { get; set; }
-        [Required]
-        public string user_name { get; set; }
-        public string menu_name { get; set; }
+        // [Key][Column(Order = 0)]
+        public int role_id { get; set; }
+        // [Key][Column(Order = 1)]
+        public string menu_code { get; set; }
         public string active { get; set; }
         public string spare1 { get; set; }
         public string spare2 { get; set; }

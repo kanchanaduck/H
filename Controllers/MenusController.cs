@@ -25,7 +25,7 @@ namespace AngularFirst.Controllers
 
         // GET: api/Menus
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Menu>>> GetMenu()
+        public async Task<ActionResult<IEnumerable<Menus>>> GetMenu()
         {
             // return await _context.Menu.ToListAsync();
             var menu = await _context.Menu
@@ -44,7 +44,7 @@ namespace AngularFirst.Controllers
 
         // GET: api/Menus/children/<parent_menu_code>
         [HttpGet("children/{id}")]
-        public async Task<ActionResult<IEnumerable<Menu>>> GetMenuChildren(string id)
+        public async Task<ActionResult<IEnumerable<Menus>>> GetMenuChildren(string id)
         {
             var menu = await _context.Menu
                                 .Include(e => e.children)
@@ -62,29 +62,29 @@ namespace AngularFirst.Controllers
 
         // GET: api/Menus/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Menu>> GetMenu(string id)
+        public async Task<ActionResult<Menus>> GetMenus(string id)
         {
-             var menu = await _context.Menu.FindAsync(id);
+            var menus = await _context.Menu.FindAsync(id);
 
-            if (menu == null)
+            if (menus == null)
             {
                 return NotFound();
             }
 
-            return menu;
+            return menus;
         }
 
         // PUT: api/Menus/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutMenu(string id, Menu menu)
+        public async Task<IActionResult> PutMenus(string id, Menus menus)
         {
-            if (id != menu.menu_code)
+            if (id != menus.menu_code)
             {
                 return BadRequest();
             }
 
-            _context.Entry(menu).State = EntityState.Modified;
+            _context.Entry(menus).State = EntityState.Modified;
 
             try
             {
@@ -92,7 +92,7 @@ namespace AngularFirst.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!MenuExists(id))
+                if (!MenusExists(id))
                 {
                     return NotFound();
                 }
@@ -108,16 +108,16 @@ namespace AngularFirst.Controllers
         // POST: api/Menus
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
-        public async Task<ActionResult<Menu>> PostMenu(Menu menu)
+        public async Task<ActionResult<Menus>> PostMenus(Menus menus)
         {
-            _context.Menu.Add(menu);
+            _context.Menu.Add(menus);
             try
             {
                 await _context.SaveChangesAsync();
             }
             catch (DbUpdateException)
             {
-                if (MenuExists(menu.menu_code))
+                if (MenusExists(menus.menu_code))
                 {
                     return Conflict();
                 }
@@ -127,26 +127,26 @@ namespace AngularFirst.Controllers
                 }
             }
 
-            return CreatedAtAction("GetMenu", new { id = menu.menu_code }, menu);
+            return CreatedAtAction("GetMenus", new { id = menus.menu_code }, menus);
         }
 
         // DELETE: api/Menus/5
         [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteMenu(string id)
+        public async Task<IActionResult> DeleteMenus(string id)
         {
-            var menu = await _context.Menu.FindAsync(id);
-            if (menu == null)
+            var menus = await _context.Menu.FindAsync(id);
+            if (menus == null)
             {
                 return NotFound();
             }
 
-            _context.Menu.Remove(menu);
+            _context.Menu.Remove(menus);
             await _context.SaveChangesAsync();
 
             return NoContent();
         }
 
-        private bool MenuExists(string id)
+        private bool MenusExists(string id)
         {
             return _context.Menu.Any(e => e.menu_code == id);
         }

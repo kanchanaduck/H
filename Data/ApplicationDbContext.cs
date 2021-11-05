@@ -17,16 +17,11 @@ namespace AngularFirst.Data
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
         }
-        public DbSet<Employee> Employee { get; set; }
-        public DbSet<Menu> Menu { get; set; }
-        public DbSet<UserSeeMenu> UserSeeMenu { get; set; }
+        public DbSet<Employees> Employee { get; set; }
+        public DbSet<Menus> Menu { get; set; }
+        public DbSet<Roles> Role { get; set; }
+        public DbSet<EmployeeRoleClaims> EmployeeRoleClaim { get; set; }
+        public DbSet<RoleMenuClaims> RoleMenuClaims { get; set; }
 
-        // protected override void OnModelCreating(ModelBuilder modelBuilder)
-        // {
-        //     modelBuilder.Entity<Menu>()
-        //         .HasOne(x => x.parent)
-        //         .WithMany(x => x.children)
-        //         .HasForeignKey(x => x.parent_menu_code);
-        // }
     }
 }
